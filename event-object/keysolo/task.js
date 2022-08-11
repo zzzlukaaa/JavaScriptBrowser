@@ -17,14 +17,13 @@ class Game {
   }
 
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-     */
+    document.addEventListener('keydown', (event) => {
+      let keyDounWhat = event.key.charCodeAt();
+      (String.fromCharCode(keyDounWhat).toLowerCase() === this.currentSymbol.textContent.toLowerCase()) ? this.success() : this.fail();
+    })
+
   }
+
 
   success() {
     this.currentSymbol.classList.add('symbol_correct');
@@ -84,7 +83,31 @@ class Game {
 
     this.currentSymbol = this.wordElement.querySelector('.symbol_current');
   }
+
+
+
+
+reverseTimer(){
+  let intervalId = null;
+  const timer= document.getElementById("timer");
+  let hour = '00:00:';
+  let secondTimer = timer.textContent;
+  const countTime = this.wordElement.childNodes.length * 1000;
+  function countTimer() {
+  
+      if(secondTimer > 0){
+        secondTimer -= 1;
+          let timerTextContent = hour + secondString.toString().padStart(2,0);
+          timer.textContent = timerTextContent;
+      }
+      else{
+          clearTimeout(intervalId);  
+          alert("Вы победили в конкурсе");
+      }
+  } 
+
+  intervalId = setInterval(countTimer, countTime);
 }
 
+}
 new Game(document.getElementById('game'))
-
